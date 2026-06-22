@@ -11,8 +11,16 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 app.add_handler(CommandHandler("start", start))
 
-def main():
-    app.run_polling(drop_pending_updates=True)
+# ❌ main() silirik
+# ❌ run_polling istifadə etmirik
 
-if __name__ == "__main__":
-    main()
+async def run_bot():
+    await app.initialize()
+    await app.start()
+    await app.updater.start_polling()
+
+    # bot işləsin
+    await app.updater.idle()
+
+import asyncio
+asyncio.run(run_bot())
