@@ -2,47 +2,17 @@ from telegram import Update
 from telegram.ext import Application, CommandHandler, ContextTypes
 import os
 
-players = []
+TOKEN = os.getenv("BOT_TOKEN")
+
+app = Application.builder().token(TOKEN).build()
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await update.message.reply_text(
-        "🎮 Mafia botuna xoş gəldin!\n\n"
-        "/join - oyuna qoşul\n"
-        "/players - oyunçuları göstər"
-    )
+    await update.message.reply_text("Salam! Bot işləyir ✅")
 
-async def join(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    user = update.effective_user.first_name
-
-    if user not in players:
-        players.append(user)
-        await update.message.reply_text(f"✅ {user} oyuna qoşuldu.")
-    else:
-        await update.message.reply_text("⚠️ Sən artıq oyundasan.")
-
-async def show_players(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    if not players:
-        await update.message.reply_text("👥 Hələ oyunçu yoxdur.")
-        return
-
-    text = "👥 Oyunçular:\n\n"
-
-    for p in players:
-        text += f"• {p}\n"
-
-    await update.message.reply_text(text)
+app.add_handler(CommandHandler("start", start))
 
 def main():
-    token = os.getenv("BOT_TOKEN")
-
-    app = Application.builder().token(token).build()
-
-    app.add_handler(CommandHandler("start", start))
-    app.add_handler(CommandHandler("join", join))
-    app.add_handler(CommandHandler("players", show_players))
-
-      def main():
-    app.run_polling()
+    app.run_polling(drop_pending_updates=True)
 
 if __name__ == "__main__":
     main()
