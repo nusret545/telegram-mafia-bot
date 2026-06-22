@@ -6,14 +6,13 @@ TOKEN = os.getenv("BOT_TOKEN")
 
 app = Application.builder().token(TOKEN).build()
 
-# /start command
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text("Salam! Bot işləyir ✅")
 
 app.add_handler(CommandHandler("start", start))
 
 def main():
-    app.run_polling(drop_pending_updates=True)
+    app.run_polling()
 
 if __name__ == "__main__":
     main()
