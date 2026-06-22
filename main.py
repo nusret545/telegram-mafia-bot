@@ -41,6 +41,7 @@ def main():
     app.add_handler(CommandHandler("join", join))
     app.add_handler(CommandHandler("players", show_players))
 
+      def main():
     app.run_polling()
 
 if __name__ == "__main__":
